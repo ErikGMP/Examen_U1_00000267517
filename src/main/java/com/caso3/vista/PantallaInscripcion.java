@@ -237,11 +237,8 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
         int index = CmbTalleres.getSelectedIndex();
 
         if (index >= 0 && index < gestor.obtenerTalleres().size()) {
-            Taller t = gestor.obtenerTalleres().get(index);
-            String desc = "--- DETALLES DEL TALLER ---\n"
-                    + "Nombre: " + t.getNombre() + "\n"
-                    + "Instructor: " + t.getNombreInstructor() + "\n"
-                    + "Horario: " + t.getHorario();
+            Taller TallerSeleccionado = gestor.obtenerTalleres().get(index);
+            String desc =TallerSeleccionado.toString() ;
             txtareaDescTaller.setText(desc);
         }
     }//GEN-LAST:event_CmbTalleresActionPerformed
@@ -267,7 +264,7 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
         this.controlador = controlador;
     }
 
-    // Método OBLIGATORIO del Patrón Observer
+   
     @Override
     public void update() {
         Ticket ticket = gestor.getUltimoTicket();
@@ -279,7 +276,7 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
             mensaje += "Alumno: " + ticket.getAlumno().getNombre() + "\n";
             mensaje += "Taller: " + ticket.getTaller().getNombre() + "\n";
 
-            txtareaTicket.setText(mensaje); // Escribe en tu JTextArea
+            txtareaTicket.setText(mensaje);
         }
     }
 

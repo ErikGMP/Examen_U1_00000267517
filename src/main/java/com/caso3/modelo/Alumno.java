@@ -7,9 +7,9 @@ package com.caso3.modelo;
  */
 public class Alumno {
     
-    String idAlumno;
-    String nombre;
-    String carrera;
+    private String idAlumno;
+    private String nombre;
+    private String carrera;
 
     public Alumno(String idAlumno, String nombre, String carrera) {
         this.idAlumno = idAlumno;

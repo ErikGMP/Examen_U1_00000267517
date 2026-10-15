@@ -52,7 +52,7 @@ public class Taller {
                     "\nFecha de inicio: " +fechaInicio + 
                     "\nFecha de finalizacion: " +fechaFinal +
                     "\nHorario: " +horario + 
-                    "\nDescripcion: " + descripcion +"\n";
+                    "\nDescripcion breve: " + descripcion +"\n";
     }
     
     
