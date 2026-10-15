@@ -21,7 +21,7 @@ public class CasoU3_00000267517 {
         ControladorInscripcion controlador = new ControladorInscripcion(modelo);
         vista.setControlador(controlador);
         
-        // 4. Mostramos la ventana
+        
         vista.setLocationRelativeTo(null);
         vista.setVisible(true);
         

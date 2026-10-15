@@ -6,7 +6,7 @@ import com.caso3.modelo.Taller;
 import com.caso3.modelo.Ticket;
 import com.caso3.controlador.ControladorInscripcion;
 import com.caso3.modelo.Alumno;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -54,9 +54,11 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 51));
         jLabel1.setFont(new java.awt.Font("Sans Serif Collection", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Sistema de Inscripcion a taller de ISW");
+        jLabel1.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -98,17 +100,9 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
         txtIdAlumno.setCaretColor(new java.awt.Color(0, 0, 0));
         txtIdAlumno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtIdAlumno.setSelectionColor(new java.awt.Color(102, 153, 255));
-        txtIdAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdAlumnoActionPerformed(evt);
-            }
-        });
         txtIdAlumno.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtIdAlumnoKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIdAlumnoKeyTyped(evt);
             }
         });
 
@@ -217,20 +211,30 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIdAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAlumnoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdAlumnoActionPerformed
-
-    private void txtIdAlumnoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdAlumnoKeyTyped
-
-    }//GEN-LAST:event_txtIdAlumnoKeyTyped
-
     private void btnInscribirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirseActionPerformed
-        String IdAlumno = txtIdAlumno.getText();
+        String IdAlumno = txtIdAlumno.getText().trim();
         int indexTaller = CmbTalleres.getSelectedIndex();
-        Taller tallerSeleccionado = gestor.obtenerTalleres().get(indexTaller);
 
-        controlador.procesarInscripcion(IdAlumno, tallerSeleccionado);
+        if (IdAlumno.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo de ID de alumno no puede estar vacío.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        gestor.buscarAlumno(IdAlumno);
+        Alumno alumnoEncontrado = gestor.getAlumnoActual();
+
+        if (alumnoEncontrado == null) {
+            JOptionPane.showMessageDialog(this, "El ID de alumno ingresado no existe en el sistema.", "Error de validación", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (indexTaller >= 0) {
+            Taller tallerSeleccionado = gestor.obtenerTalleres().get(indexTaller);
+            controlador.procesarInscripcion(IdAlumno, tallerSeleccionado);
+        } else {
+            JOptionPane.showMessageDialog( this, "Por favor, seleccione un taller válido.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnInscribirseActionPerformed
 
     private void CmbTalleresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbTalleresActionPerformed
@@ -238,7 +242,7 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
 
         if (index >= 0 && index < gestor.obtenerTalleres().size()) {
             Taller TallerSeleccionado = gestor.obtenerTalleres().get(index);
-            String desc =TallerSeleccionado.toString() ;
+            String desc = TallerSeleccionado.toString();
             txtareaDescTaller.setText(desc);
         }
     }//GEN-LAST:event_CmbTalleresActionPerformed
@@ -264,7 +268,6 @@ public class PantallaInscripcion extends javax.swing.JFrame implements Observer 
         this.controlador = controlador;
     }
 
-   
     @Override
     public void update() {
         Ticket ticket = gestor.getUltimoTicket();
