@@ -10,7 +10,7 @@ import com.caso3.vista.PantallaInscripcion;
  *
  * @author erika
  */
-public class CasoU3_00000267517 {
+public class Main {
 
     public static void main(String[] args) {
         
